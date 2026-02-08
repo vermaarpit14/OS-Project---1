@@ -20,7 +20,7 @@ def get_cpu_count():
 
 def run_benchmark(rl, rh, max_procs):
     times = []
-    procs = list(range(1, max_procs + 3))
+    procs = list(range(1, (max_procs + 3))
 
     print(f"--- Benchmarking Range {rl} to {rh} ---")
     for n in procs:
