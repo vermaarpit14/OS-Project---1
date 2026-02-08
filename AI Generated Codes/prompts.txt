@@ -1,0 +1,207 @@
+FAST PRIME ASSIGNMENT — QUICK NOTES
+
+  ----------------------------------
+  PROMPT 1
+  ----------------------------------
+  How do I open a text file in C
+  using low-level system calls
+  instead of fopen?
+
+  Use open() from <fcntl.h>.
+
+  #include <fcntl.h> #include
+  <unistd.h>
+
+  int fd = open(“prime.txt”,
+  O_WRONLY | O_CREAT | O_TRUNC,
+  0644); if (fd < 0) { // Error
+  handling } close(fd);
+
+  Flags: O_WRONLY -> write only
+  O_CREAT -> create if missing
+  O_TRUNC -> truncate file 0644 ->
+  permissions
+  ----------------------------------
+
+PROMPT 2
+
+Prime check in C:
+
+#include <math.h>
+
+int is_prime(int n) { if (n <= 1) return 0; if (n == 2 || n == 3) return
+1; if (n % 2 == 0 || n % 3 == 0) return 0;
+
+    for (int i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0)
+            return 0;
+    }
+    return 1;
+
+}
+
+Compile: gcc file.c -lm
+
+  ----------------------------------
+  PROMPT 3
+  ----------------------------------
+  Split range:
+
+  int range = rh - rl + 1; int
+  chunk_size = range / n_procs; int
+  remainder = range % n_procs;
+  ----------------------------------
+
+PROMPT 4
+
+fork() in loop:
+
+for (int i=0;i<n;i++) { if (fork()==0) { exit(0); } }
+
+  ----------------------------------
+  PROMPT 5
+  ----------------------------------
+  Wait for children:
+
+  #include <sys/wait.h>
+
+  for (int i=0;i<n_procs;i++)
+  wait(NULL);
+  ----------------------------------
+
+PROMPT 6
+
+Multiple writers:
+
+open(“prime.txt”, O_WRONLY | O_CREAT | O_APPEND, 0644);
+
+  ----------------------------------
+  PROMPT 7
+  ----------------------------------
+  Timing:
+
+  gettimeofday(&start,NULL);
+  gettimeofday(&end,NULL);
+  ----------------------------------
+
+PROMPT 8
+
+Delete file:
+
+system(“rm -f prime.txt”); unlink(“prime.txt”);
+
+  ----------------------------------
+  PROMPT 9
+  ----------------------------------
+  CPU count:
+
+  lscpu | grep “^CPU(s):”
+  ----------------------------------
+
+PROMPT 10
+
+SIGINT handler:
+
+void handle_sigint(int sig){ for(int i=0;i<n;i++) kill(pids[i],SIGKILL);
+exit(1); }
+
+  ----------------------------------
+  PROMPT 11
+  ----------------------------------
+  atoi():
+
+  int rl = atoi(argv[1]);
+  ----------------------------------
+
+PROMPT 12
+
+Run python from C:
+
+system(“python3 plot_results.py”);
+
+  ----------------------------------
+  PROMPT 13
+  ----------------------------------
+  Add newline:
+
+  sprintf(buf,“%d”,num);
+  ----------------------------------
+
+PROMPT 14
+
+Count lines in Python:
+
+with open(“prime.txt”) as f: count=sum(1 for _ in f);
+
+  ----------------------------------
+  PROMPT 15
+  ----------------------------------
+  Plot:
+
+  import matplotlib.pyplot as plt
+  ----------------------------------
+
+PROMPT 16
+
+Run C from Python:
+
+subprocess.run([“./fastprime”,“1000”,“2000”,“4”])
+
+  ----------------------------------
+  PROMPT 17
+  ----------------------------------
+  CPU count Python:
+
+  import os print(os.cpu_count())
+  ----------------------------------
+
+PROMPT 18
+
+sqrt error:
+
+gcc fastprime.c -lm
+
+  ----------------------------------
+  PROMPT 19
+  ----------------------------------
+  Check open:
+
+  if(fd<0) perror(“open”);
+  ----------------------------------
+
+PROMPT 20
+
+Physical cores = hardware Logical cores = OS threads
+
+  --------------------------------------------
+  PROMPT 21
+  --------------------------------------------
+  Python try/except:
+
+  try:
+  subprocess.run([“./fastprime”],check=True)
+  except subprocess.CalledProcessError: pass
+  --------------------------------------------
+
+PROMPT 22
+
+Save plot:
+
+plt.savefig(“performance_plot.png”)
+
+  ----------------------------------
+  PROMPT 23
+  ----------------------------------
+  Process limit:
+
+  ulimit -u
+  ----------------------------------
+
+===========================================
+
+"I need to create a C program called 'fastprime' that finds prime numbers in a specific range [rl, rh]. The range values and the number of child processes 'n' should be passed as command line arguments. 
+The main goal is to minimize execution time by splitting the workload among the 'n' child processes. Each child process should check its assigned chunk of numbers and write the primes it finds into a file named 'prime.txt'. The parent process needs to wait for all the children to finish before exiting. 
+Also, please include signal handling so that if I interrupt the parent process (like with Ctrl+C), it automatically kills all the child processes. 
+Finally, I need a Python script to benchmark this. It should run the C program with varying numbers of processes (from 1 up to the number of logical cores on my machine) and plot a graph of Execution Time vs. Number of Processes."
+
+This is the prompt I gave to AI while working on this project, to generate a reference code.
