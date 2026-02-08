@@ -3,9 +3,11 @@ import matplotlib.pyplot as plt
 import os
 
 ranges = [
-    (1000, 10000),
+    (10000, 50000),
     (50000, 100000),
-    (100000, 500000)
+    (100000, 500000),
+    (500000,1000000),
+    (1000000,2000000)
 ]
 executable = "./fastprime"
 
